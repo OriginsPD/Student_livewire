@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\logoutController;
+use App\Http\Livewire\Home\Index;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', Index::class);
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/dropdown', \App\Http\Livewire\Admin\Index::class)->name('admin.dashboard');
+
 });
+
+Route::post('logout', [logoutController::class, 'logout'])->name('logout');
